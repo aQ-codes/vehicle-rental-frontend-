@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --primary:#057cd7;
+  --black : #000000;
+  --white : #FFFFFF;
+  --hover: #808080;
+  --color3: #0F1738;
+  --color4: #E26930;
+  --color5: #D36A80;
+  --color6: #F8F9FF;
+  --color7: #6A6A6D;
+  --color8: #AE4855;
+  --color9: #1E1F21;
+  --color10:#F8F9FC;
+  --color11:#E5E9FF;
+  --color12:#CECED1;
+  --color13:#f8f9fa;
+}
+
+header,main{
+  background-color: white;
+  padding: 10px 100px;
+}
+
+/* START: Button styles */
+.btn {
+@apply rounded-md inline-block text-sm font-semibold border-none outline-none
+  flex gap-1 items-center justify-center cursor-pointer 
+  transition-transform  duration-300 ease-in-out 
+  bg-blue-500 w-[100px] text-white p-2 mt-3;
+}
+
+.btn:hover {
+  @apply scale-105 bg-[#057cd7];
+}
+
+.btn:active {
+  @apply scale-100;
+}
+
+.btn label:hover {
+  @apply cursor-pointer;
+}
+
+.btn.modal.close{
+  width: 50px;
+}
+/* END: Button styles */
+
+/* START: Modal styles */
+
+
+/* END: Modal styles  */
+
+/* START: Footer styles */
+.footer{
+  @apply bg-gray-300;
+}
+.footer__links {
+  @apply flex-1 w-full flex md:justify-end flex-wrap max-md:mt-10 gap-20;
+}
+
+.footer__link {
+  @apply flex flex-col gap-6 text-base min-w-[170px];
+}
+
+.footer__copyrights-link {
+  @apply flex-1 flex sm:justify-end justify-center max-sm:mt-4 gap-10;
+}
+/* END: Footer styles */
