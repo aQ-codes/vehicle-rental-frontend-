@@ -11,23 +11,46 @@ interface AuthLayoutProps {
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({ children, onClose }) => {
   return (
-    <Modal isOpen={true} onClose={onClose}> {/* Use the passed onClose prop */}
-      <div className="flex flex-col items-center justify-center rounded-2xl">
-        <header className="text-center py-2 px-12 font-semibold text-base bg-transparent" >
-          <Image 
-            src="/assets/images/logo_dreamwheels.png"
-            alt="company_logo"
-            width={96}
-            height={20}
-          />
-        </header>
-        <h2 className="mt-2 font-semibold text-sm text-gray-500">Your Road to Freedom</h2>
-        <main className="p-10 rounded-lg shadow-md w-full max-w-[480px]">         {children}
+    <Modal isOpen={true} onClose={onClose}>
+      
+      <div className="flex">
+  
+        {/* Left Column: Header and Image */}
+        <div className="flex flex-col items-center">
+          <header className="text-center flex-col font-semibold0">
+            <Image 
+            className="mx-auto"
+              src="/assets/images/logo_dw.png"
+              alt="company_logo"
+              width={80}
+              height={15}
+            />
+            <h2 className="mt-2 font-semibold text-sm text-gray-500">Your Road to Freedom</h2>
+          </header>
+          
+          {/* Image below the header */}
+          <div>
+            <Image
+              src="/assets/images/authbg.png"  
+              alt="auth_background"
+              width={320}   
+              height={400}  
+              className="object-cover"
+            />
+          </div>
+          
+        </div>
 
-        </main>
+        {/* Right Column: Main Content */}
+        <div>
+          {children}
+        </div>
+
       </div>
 
     </Modal>
+
+    
   );
 };
 

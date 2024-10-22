@@ -4,10 +4,11 @@ import Link from "next/link";
 import { VehicleModelResponse } from "@/models/index";
 import ClipLoader from "react-spinners/ClipLoader"; 
 import Image from "next/image";
+import { BriefcaseIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 const VehicleModelsTable = () => {
     const { loading, error, vehicleModels } = useGetVehicleModels();
-    const { deleteVehicleModel } = useDeleteVehicleModel(); // Implement delete functionality
+    const { deleteVehicleModel } = useDeleteVehicleModel();
 
     if (loading) return (
         <div className="flex justify-center items-center h-48">
@@ -25,9 +26,13 @@ const VehicleModelsTable = () => {
 
     const constructImageUrl = (imagePath: string) => {
         // Prepend 'http://' if the URL doesn't already include it
+        const endpoint = process.env.NEXT_PUBLIC_MINIO_ENDPOINT;
+        const port = process.env.NEXT_PUBLIC_MINIO_PORT;
+      
         if (!imagePath.startsWith('http://') && !imagePath.startsWith('https://')) {
-            return `http://${imagePath}`;
+          return `http://${endpoint}:${port}${imagePath}`;
         }
+      
         return imagePath;
     };
 
@@ -64,18 +69,21 @@ const VehicleModelsTable = () => {
                             <td className="border-b p-2">{vehicle.model}</td>
                             <td className="border-b p-2">{vehicle.type}</td>
                             <td className="border-b p-2">{vehicle.quantity}</td>
-                            <td className="border-b p-2">
-                                <Link href={`/edit-vehicle/${vehicle.id}`}>
-                                    <button className="bg-blue-500 text-white px-2 py-1 rounded">Inventory</button>
+                            <td className="border-b p-2 flex">
+                                <Link href={`/vehicle-models/${vehicle.id}/vehicles`}>
+                                  <button className="bg-green-500 text-white p-2 rounded hover:bg-green-400">
+                                    <BriefcaseIcon className="h-5 w-5" />
+                                  </button>
                                 </Link>
                                 <Link href={`/edit-vehicle/${vehicle.id}`}>
-                                <button className="border border-blue-500 text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white px-2 py-1 rounded ml-2">Edit</button>
-
+                                  <button className="flex items-center border border-blue-500 text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white px-2 py-1 rounded ml-2">
+                                  <PencilSquareIcon className="h-5 w-5" />
+                                  </button>
                                 </Link>
                                 <button 
-                                    onClick={() => handleDelete(vehicle.id)} 
-                                    className="border border-red-500 text-red-500 bg-transparent hover:bg-red-500 hover:text-white px-2 py-1 rounded ml-2">
-                                    Delete
+                                  onClick={() => handleDelete(vehicle.id)} 
+                                  className="flex items-center border border-red-500 text-red-500 bg-transparent hover:bg-red-500 hover:text-white px-2 py-1 rounded ml-2">
+                                  <TrashIcon className="h-5 w-5 mr-1" />
                                 </button>
                             </td>
                         </tr>

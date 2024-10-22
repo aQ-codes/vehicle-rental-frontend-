@@ -19,9 +19,11 @@ export const  CAR_FORM_INPUTS = [
     "fieldType": "dropdown",
     "required": true,
     "options": [
+      "--Select--",
       "Toyota",
       "Tata",
       "Honda",
+      "Mahindra",
       "Ford",
       "Chevrolet",
       "Nissan",
@@ -69,7 +71,7 @@ export const  CAR_FORM_INPUTS = [
       "label": "Type",
       "name": "type",
       "fieldType": "dropdown",
-      "options": ["Sedan", "SUV", "Truck", "Coupe", "Convertible", "Van", "Hatchback","Electric","Hybrid"],
+      "options": ["--Select--","Sedan", "SUV", "Truck", "Coupe", "Convertible", "Van", "Hatchback","Electric","Hybrid"],
       "required": true,
       "icon": "FaCar"
     },

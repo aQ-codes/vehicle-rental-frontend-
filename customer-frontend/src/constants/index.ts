@@ -27,3 +27,13 @@ export const footerLinks = [
     ],
   },
 ];
+
+export const locations = [
+  { id: 1, name: 'Kattakada' },
+  { id: 2, name: 'Neyyatinkara' },
+  { id: 3, name: 'Kazhakootam' },
+  { id: 4, name: 'Nedumangad' },
+  { id: 5, name: 'Vellarada' },
+  { id: 6, name: 'Poovar' },
+  { id: 7, name: 'Thampanoor' },
+]

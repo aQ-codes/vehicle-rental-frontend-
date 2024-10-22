@@ -4,8 +4,8 @@ export const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: '192.168.10.183',
-        port: '9000', // Include the port if needed
+        hostname: process.env.NEXT_PUBLIC_MINIO_ENDPOINT,
+        port: process.env.NEXT_PUBLIC_MINIO_PORT,
         pathname: '/**', // This allows all paths under the hostname
       },
     ],

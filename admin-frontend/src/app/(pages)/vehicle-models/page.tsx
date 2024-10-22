@@ -5,12 +5,13 @@ import AddVehicleModel from '@/modules/vehicle/components/AddVehicleModel';
 import Button from '@/components/ui/Button'; 
 import AddVehicleInventory from '@/modules/vehicle/components/AddVehicleInventory';
 import VehicleModelsTable from '@/modules/vehicle/components/VehicleModelsTable';
-import { AiOutlineFileExcel } from 'react-icons/ai';
+import { DocumentArrowDownIcon } from '@heroicons/react/24/outline';
 
 const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInventoryModalOpen, setIsInventoryModalOpen] = useState(false);
 
+  
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -32,7 +33,6 @@ const Page = () => {
 
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold">Vehicle Models</h1>
-            
             {/* Right Side Buttons */}
             <div className="flex">
               <Button
@@ -47,7 +47,7 @@ const Page = () => {
                 onClick={openInventoryModal} 
                 className="flex items-center border border-green-500 text-green-500 px-2 py-1 rounded ml-2 hover:bg-gray-100  transition"
               >
-                <AiOutlineFileExcel className="mr-1" /> 
+                <DocumentArrowDownIcon className="h-6 w-6 mr-1" /> 
                 Upload Vehicles
               </button>
             </div>

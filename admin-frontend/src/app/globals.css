@@ -9,16 +9,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.btn.add{
-  display: flex;
-  padding: 8px;
-  background-color: #3ad98c;
-  font-weight: 600;
-  color: white;
-  gap: 4px;
-  border-radius: 8px;
-}
-
 .btn{
   border-radius: 8px;
   display: inline-block;
@@ -32,10 +22,9 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease;
-  background-color: var(--primary);
   width: 100px;
   color: #dfdfdf;
-  padding: 4px 8px;
+  padding: 8px 8px;
   font-weight: 600;
 }
 
@@ -50,29 +39,39 @@ body {
 .btn:active {
   transform: scale(1); 
 }
-
-.btn.add{
-  width: auto;
-  padding: 8px 8px;
-}
-
-.btn.signin{
-  background-color: transparent;
-  border: 2px solid var(--primary);
-}
-
-.btn.add:hover{
-  background-color: #37d388;
-
-}
-
-.btn.signin:hover{
-  background-color: #0c83de;
-  background-color: #0c83de;
-
-
-}
+/* modal close  */
 
 .btn.modal.close{
   width: 50px;
 }
+
+/* add button  */
+
+.btn.add,.btn.confirm,.btn.cancel{
+  width:auto;
+  background-color: #3ad98c;
+  font-weight: 600;
+  color: white;
+}
+
+.btn.add:hover{
+  background-color: #37d388;
+}
+
+.btn.confirm{
+  background-color: #37d388;
+}
+
+.btn.confirm:hover{
+  background-color: #22d37d;
+}
+
+
+.btn.cancel{
+  background-color: #e5413c;
+}
+
+.btn.cancel:hover{
+  background-color: #ec1f18;
+}
+

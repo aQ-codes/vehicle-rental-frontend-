@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { FaSignOutAlt } from 'react-icons/fa';
 import {MENU_ITEMS} from '@/constants/menu-items'
 import { usePathname } from 'next/navigation';
+import { ArrowRightEndOnRectangleIcon } from '@heroicons/react/24/outline';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -10,9 +10,9 @@ export default function Sidebar() {
 
   return (
     <div className="flex flex-col h-screen bg-white w-64">
-      <div className="flex items-center justify-center mt-8">
-        <Image src="/assets/images/logo_dreamwheels.png" alt="Logo" width={48} height={48} />
-        <h1 className="text-xl font-bold ml-4">DreamWheels</h1>
+      <div className="flex items-center justify-center mt-7 space-x-3">
+        <Image src="/assets/images/logo_dw.png" alt="Logo" width={48} height={48} />
+        <Image src="/assets/images/logo_dw2.png" alt="Logo" width={144} height={88} />
       </div>
         <nav className="flex-1 mt-10">
         <ul>
@@ -29,7 +29,7 @@ export default function Sidebar() {
       </nav>
       <div className="mt-auto hover:bg-slate-50">
         <a href="#" className="flex items-center p-4">
-          <FaSignOutAlt className="h-6 w-6" />
+        <ArrowRightEndOnRectangleIcon className="h-6 w-6" />
           <span className="ml-3 text-sm">Logout</span>
         </a>
       </div>

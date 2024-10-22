@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 // import { useRouter } from 'next/navigation'; 
-import AuthButton from '@/app/modules/auth/components/AuthButton';
+import AuthButton from '@/modules/auth/components/AuthButton';
 
 const Navbar = () => {
     // const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); // State to control the Auth modal display
@@ -38,16 +38,16 @@ const Navbar = () => {
 
     return (
       <>
-      <div className="w-full flex flex-wrap justify-between">
+      <div className="w-full flex flex-wrap justify-between relative z-20">
         {/* Branding */}
         <div>
           {/* Company logo */}
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/assets/images/logo_dreamwheels.png"
+          <Link href="/" className="flex items-center mt-4">
+              <Image
+              src="/assets/images/logo_dw2.png"
               alt="company_logo"
-              width={100}
-              height={40}
+              width={200}
+              height={100}
             />
           </Link>
         </div>
@@ -57,7 +57,6 @@ const Navbar = () => {
           <ul className="flex space-x-4">
             <li>
               <AuthButton/>
-
             </li>
           </ul>
         </nav>

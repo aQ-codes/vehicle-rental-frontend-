@@ -16,7 +16,7 @@ export const useAddVehicleModel = () => {
     return { addVehicleModel, loading, error };
 };
 
-// gell all vehicle model service 
+// get all vehicle model service 
 export const useGetVehicleModels = () => {
     const { loading, error, data } = useQuery(GET_VEHICLE_MODELS_QUERY);
 

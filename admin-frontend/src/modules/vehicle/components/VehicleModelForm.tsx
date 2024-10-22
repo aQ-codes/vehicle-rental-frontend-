@@ -109,8 +109,8 @@ export default function CarForm() {
             setFormData({ // Optionally, reset the form
                 name: "",
                 model: "",
-                make: "Toyota",
-                type: "Sedan",
+                make: "",
+                type: "",
                 seats: 0,
                 doors: 0,
                 description: "",

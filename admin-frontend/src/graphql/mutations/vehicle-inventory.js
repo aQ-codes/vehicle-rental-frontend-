@@ -5,7 +5,6 @@ export const ADD_VEHICLE_INVENTORIES_MUTATION = gql`
     addVehicleInventories(input: $input) {
       success
       errorEntries {
-        id
         modelId
         vin
         variant
@@ -22,3 +21,10 @@ export const ADD_VEHICLE_INVENTORIES_MUTATION = gql`
     }
   }
 `;
+
+export const DELETE_VEHICLE_INVENTORY_MUTATION = gql`
+  mutation DeleteVehicleInventory($id: Int!, $modelId: Int!) {
+    deleteVehicleInventory(id: $id, modelId: $modelId)
+  }
+`;
+

@@ -1,4 +1,4 @@
-import { FaUser } from 'react-icons/fa';
+import { UserIcon } from '@heroicons/react/24/outline';
 
 export default function Navbar() {
   return (
@@ -7,7 +7,7 @@ export default function Navbar() {
     {/* Other content can go here if needed */}
   </div>
   
-  <FaUser className="h-6 w-6 ml-auto" /> 
+  <UserIcon className="h-6 w-6 ml-auto" /> 
 </div>
 
   );

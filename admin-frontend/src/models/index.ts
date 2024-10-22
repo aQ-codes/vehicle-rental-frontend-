@@ -19,7 +19,6 @@ additionalImages: string[];
 quantity: number; 
 }
 
-
 export interface VehicleEntry {
   id: number;
   modelId: number;

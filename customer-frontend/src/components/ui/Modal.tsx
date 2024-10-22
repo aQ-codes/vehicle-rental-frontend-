@@ -16,21 +16,21 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, variant = [] }
 
   return (
     <div className="fixed inset-0 w-screen min-h-screen bg-black bg-opacity-70 flex items-center justify-center z-[1000]">
-    <div className={`ModalBox ${modalClassName} relative z-[1001] max-h-[80vh] overflow-y-auto p-4 rounded-xl bg-white`}>
-      <div className="flex justify-end">
-        <Button
-          type="button"
-          title="Close"
-          icon="/assets/icons/close.svg"
-          variant={['btn', 'close']}
-          onClick={onClose}
-        />
-      </div>
-      <div className="ModalBody">
-        {children}
+      <div className={`ModalBox ${modalClassName} z-[1001] overflow-y-auto  rounded-xl bg-white`}>
+        <div className="flex justify-end">
+          <Button
+            type="button"
+            title="Close"
+            icon="/assets/icons/close.svg"
+            variant={['btn', 'close']}
+            onClick={onClose}
+          />
+        </div>
+        <div>
+          {children}
+        </div>
       </div>
     </div>
-  </div>
   
   );
 };

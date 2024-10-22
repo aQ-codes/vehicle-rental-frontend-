@@ -7,7 +7,7 @@ const Footer = () => (
   <footer className='flex flex-col text-black-100  border-t border-gray-100 footer'>
     <div className='flex max-md:flex-col flex-wrap justify-between gap-5 sm:px-16 px-6 py-10'>
       <div className='flex flex-col justify-start items-start '>
-        <Image src="/assets/images/logo/dreamwheels.png" alt='logo' width={118} height={18} className='object-contain' />
+        <Image src="/assets/images/logo_dw.png" alt='logo' width={118} height={118} className='object-contain' />
         <p className='text-base text-gray-700'>
           DreamWheels 2024 
         </p>

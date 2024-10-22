@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import * as XLSX from 'xlsx';  // Import the XLSX library
+import * as XLSX from 'xlsx'; // Import the XLSX library
+import { CheckIcon } from "@heroicons/react/24/outline";
 import { ADD_VEHICLE_INVENTORIES_MUTATION } from '@/graphql/mutations/vehicle-inventory';
-import { AiOutlineUpload, AiOutlineCheck } from "react-icons/ai";  // Import upload and check icons
+import ClipLoader from 'react-spinners/ClipLoader'; // Import ClipLoader
 import { VehicleEntry } from '@/models';
-
 
 interface FailedEntry extends VehicleEntry {
   error: string;
@@ -12,11 +12,16 @@ interface FailedEntry extends VehicleEntry {
 
 const ExcelVehicleInventoryUpload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [addVehicleInventories] = useMutation(ADD_VEHICLE_INVENTORIES_MUTATION);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
+      setErrorMessages([]); // Clear error messages when a new file is selected
+      setSuccessMessage(null); // Clear success message
     } else {
       setFile(null);
     }
@@ -26,8 +31,13 @@ const ExcelVehicleInventoryUpload: React.FC = () => {
     if (!file) return;
 
     const reader = new FileReader();
+    setLoading(true);
+    
     reader.onload = async (event) => {
-      if (!event.target || !event.target.result) return;
+      if (!event.target || !event.target.result) {
+        setLoading(false);
+        return;
+      }
 
       const data = new Uint8Array(event.target.result as ArrayBuffer);
       const workbook = XLSX.read(data, { type: 'array' });
@@ -35,64 +45,69 @@ const ExcelVehicleInventoryUpload: React.FC = () => {
       const worksheet = workbook.Sheets[sheetName];
 
       const vehicleData: VehicleEntry[] = XLSX.utils.sheet_to_json(worksheet);
-
       const failedEntries: FailedEntry[] = []; // Track failed entries
 
       try {
         // Upload vehicle data in a single mutation call
         const response = await addVehicleInventories({ variables: { input: vehicleData } });
-
+    
         if (!response.data.addVehicleInventories.success) {
-          // If there are failed entries, track them
-          failedEntries.push(...response.data.addVehicleInventories.errorEntries);
-        }
-
-        // Process success/failure message
-        if (failedEntries.length) {
-          createErrorExcel(failedEntries); // Create Excel file with failed entries
-          alert('Some vehicles failed to upload. Error file generated.');
+            // If there are failed entries, track them
+            failedEntries.push(...response.data.addVehicleInventories.errorEntries);
+            const failedCount = failedEntries.length; 
+            // Set error messages indicating how many entries failed
+            setErrorMessages([`Failed to upload ${failedCount} vehicle(s).`]);
         } else {
-          alert('All vehicles uploaded successfully!');
+            setSuccessMessage('All vehicles uploaded successfully!');
         }
-
-      } catch (error) {
+    } catch (error) {
         console.error('Error uploading vehicles:', error);
-        alert('Failed to add vehicles.');
-      }
+        setErrorMessages(['Failed to add vehicles.']);
+    } finally {
+        setLoading(false); // Stop loading after the process
+    }
+    
     };
 
     reader.readAsArrayBuffer(file);
   };
 
-  const createErrorExcel = (failedEntries: FailedEntry[]) => {
-    const worksheet = XLSX.utils.json_to_sheet(failedEntries); // Convert failed entries to worksheet
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'FailedEntries');
-
-    // Generate Excel file for download
-    XLSX.writeFile(workbook, 'failed_entries.xlsx');
-  };
-
   return (
-    <div className='flex justify-between items-center mb-4'>
-      <label className="border border-gray-400 rounded px-2 py-1 cursor-pointer inline-block flex items-center">
-        <AiOutlineUpload className="mr-2" />  {/* Upload icon */}
-        Upload Sheet
-        <input
-          type="file"
-          accept=".xlsx, .xls"
-          onChange={handleFileChange}
-          className="hidden"  // Hide the default input appearance
-        />
-      </label>
+    <div>
+      <div className='flex justify-between items-center mb-4'>
+        <label className="border border-gray-400 rounded px-2 py-1 cursor-pointer inline-block flex items-center">
+          <input
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={handleFileChange}
+          />
+        </label>
 
-      <button
-        onClick={handleUpload}
-        className="flex items-center border border-green-500 text-green-500 px-2 py-1 rounded ml-2 hover:bg-gray-100 transition"
-      >
-        <AiOutlineCheck className="mr-1" />
-        Save Changes
-      </button>
+        <button
+          onClick={handleUpload}
+          className="flex items-center border border-green-500 text-green-500 px-2 py-1 rounded ml-2 hover:bg-gray-100 transition"
+          disabled={loading}
+        >
+          {loading ? (
+            <ClipLoader size={20} color={"#36D7B7"} loading={loading} />
+          ) : (
+
+
+<CheckIcon className="h-5 w-5 mr-1" />
+
+          )}
+          Save Changes
+        </button>
+      </div>
+
+      {successMessage && <p className="text-green-500">{successMessage}</p>}
+      {errorMessages.length > 0 && (
+        <div className="text-red-500">
+          {errorMessages.map((error, index) => (
+            <p key={index}>{error}</p>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
