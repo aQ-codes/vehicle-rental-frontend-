@@ -29,8 +29,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
   }
 
   return (
-    <div className=" p-5">
-      <h1 className="text-center ">WELCOME BACK !</h1>
+    <div className="">
+      <h1 className="text-center font-bold text-xl">Hello, Again!</h1>
+      <h2 className="text-center mb-5">We are happy to have you back</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"
@@ -38,7 +39,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full p-5 border border-gray-300 rounded-md mb-3"
+          className="w-full p-2 border border-gray-300 rounded-md "
         />
         <input
           type="password"

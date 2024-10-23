@@ -16,7 +16,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, onClose }) => {
       <div className="flex">
   
         {/* Left Column: Header and Image */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pl-5 pb-5 pr-5">
           <header className="text-center flex-col font-semibold0">
             <Image 
             className="mx-auto"
@@ -37,12 +37,31 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, onClose }) => {
               height={400}  
               className="object-cover"
             />
+            <div className="store-btns flex justify-center space-x-4 mt-3 mb-2">
+              <a href="#">
+                <Image
+                  src="/assets/images/dwnld_appstore.svg"
+                  alt="Download on the App Store"
+                  width={100}
+                  height={35}
+                />
+              </a>
+              <a href="#">
+                <Image
+                  src="/assets/images/dwnld_googleplay.svg"
+                  alt="Get it on Google Play"
+                  width={100}
+                  height={35}
+                />
+              </a>
+            </div>
+
           </div>
           
         </div>
 
         {/* Right Column: Main Content */}
-        <div>
+        <div className="pr-10">
           {children}
         </div>
 
