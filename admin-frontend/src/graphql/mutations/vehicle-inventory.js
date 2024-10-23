@@ -22,6 +22,12 @@ export const ADD_VEHICLE_INVENTORIES_MUTATION = gql`
   }
 `;
 
+export const UPDATE_VEHICLE_INVENTORY_MUTATION = gql`
+  mutation UpdateVehicleInventory($id: Int!, $input: AddVehicleInventoryInput!) {
+    updateVehicleInventory(id: $id, input: $input)
+  }
+`;
+
 export const DELETE_VEHICLE_INVENTORY_MUTATION = gql`
   mutation DeleteVehicleInventory($id: Int!, $modelId: Int!) {
     deleteVehicleInventory(id: $id, modelId: $modelId)

@@ -53,7 +53,7 @@ const VehicleModelsTable = () => {
                 </thead>
                 <tbody>
                     {vehicleModels.map((vehicle: VehicleModelResponse) => (
-                        <tr key={vehicle.id}>
+                        <tr key={vehicle.id} className="border-b">
                             <td className="border-b p-2">{vehicle.id}</td>
                             <td className="border-b p-2">
                                 <Image 
@@ -64,12 +64,12 @@ const VehicleModelsTable = () => {
                                     className="h-16 w-16 object-cover" 
                                 />
                             </td>
-                            <td className="border-b p-2">{vehicle.name}</td>
-                            <td className="border-b p-2">{vehicle.make}</td>
-                            <td className="border-b p-2">{vehicle.model}</td>
-                            <td className="border-b p-2">{vehicle.type}</td>
-                            <td className="border-b p-2">{vehicle.quantity}</td>
-                            <td className="border-b p-2 flex">
+                            <td className="p-2">{vehicle.name}</td>
+                            <td className="p-2">{vehicle.make}</td>
+                            <td className="p-2">{vehicle.model}</td>
+                            <td className="p-2">{vehicle.type}</td>
+                            <td className="p-2">{vehicle.quantity}</td>
+                            <td className="p-2 flex">
                                 <Link href={`/vehicle-models/${vehicle.id}/vehicles`}>
                                   <button className="bg-green-500 text-white p-2 rounded hover:bg-green-400">
                                     <BriefcaseIcon className="h-5 w-5" />

@@ -75,7 +75,7 @@ const ExcelVehicleInventoryUpload: React.FC = () => {
   return (
     <div>
       <div className='flex justify-between items-center mb-4'>
-        <label className="border border-gray-400 rounded px-2 py-1 cursor-pointer inline-block flex items-center">
+        <label className="border border-gray-400 rounded px-2 py-1 cursor-pointer  flex items-center">
           <input
             type="file"
             accept=".xlsx, .xls"
@@ -91,10 +91,7 @@ const ExcelVehicleInventoryUpload: React.FC = () => {
           {loading ? (
             <ClipLoader size={20} color={"#36D7B7"} loading={loading} />
           ) : (
-
-
-<CheckIcon className="h-5 w-5 mr-1" />
-
+          <CheckIcon className="h-5 w-5 mr-1" />
           )}
           Save Changes
         </button>

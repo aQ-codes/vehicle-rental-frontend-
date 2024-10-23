@@ -26,10 +26,11 @@ export interface VehicleEntry {
   variant: string;
   year: number;
   color: string;
-  transmission: string;
+  transmission: string; 
   fuelType: string;
   engineCapacity: number;
   mileage: number;
   pricePerDay: number;
   status: string;
 }
+

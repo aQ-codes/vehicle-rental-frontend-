@@ -83,7 +83,7 @@ export const  CAR_FORM_INPUTS = [
       "icon": "FaDoorClosed"
     },
     {
-      "label": "Doors",
+      "label": "Number of Doors",
       "name": "doors",
       "fieldType": "number",
       "required": true,
