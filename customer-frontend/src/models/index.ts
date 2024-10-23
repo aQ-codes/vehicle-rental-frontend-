@@ -8,4 +8,5 @@ export interface Customer {
   country: string;
   pincode: string;
   password: string;
+  isVerified:boolean;
 }
