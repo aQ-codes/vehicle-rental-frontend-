@@ -105,7 +105,7 @@ export default function CarForm() {
                 additionalImages: formData.additionalImages
             });
 
-            setSuccessMessage("Vehicle model added successfully!"); // Set the success message
+            setSuccessMessage("Vehicle model added successfully!");
             setFormData({ // Optionally, reset the form
                 name: "",
                 model: "",

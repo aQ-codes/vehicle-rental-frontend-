@@ -14,7 +14,7 @@ const AuthBox: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   // Switch to the verify phone step after registration
   const handleRegistrationSuccess = (phone: string) => {
     setPhoneNumber(phone);
-    setShowVerifyPhone(true);
+    setShowVerifyPhone(false);
   };
 
   return (

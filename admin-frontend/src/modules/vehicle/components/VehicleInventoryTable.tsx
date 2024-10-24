@@ -8,7 +8,7 @@ import VehicleInventoryModal from "./VehicleInventoryModal";
 
 
 const VehicleInventoryTable = ({ modelId }: { modelId: number }) => {
-    const { loading, error, vehicleInventories} = useGetVehicleInventoriesByModelId(modelId);
+    const {vehicleInventories, loading, error, } = useGetVehicleInventoriesByModelId(modelId);
     const [isInventoryModalOpen, setIsInventoryModalOpen] = useState(false);
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState<number | null>(null); 
@@ -16,6 +16,7 @@ const VehicleInventoryTable = ({ modelId }: { modelId: number }) => {
     const [editingInventory, setEditingInventory] = useState<VehicleEntry | null>(null); // State for the inventory being edited
 
     const { loading: deleting, error: deleteError, success, deleteVehicleEntry } = useDeleteVehicleEntry(); 
+
 
     //vehicle inventory delete
     const handleDelete = async () => {

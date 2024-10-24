@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
+import { useRegisterCustomer } from "../services/register-service";
 
 interface CustomerRegisterFormProps {
   onClose: () => void;
   onSuccess: (phone: string) => void; // New prop for handling successful registration
 }
 
-const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onClose, onSuccess }) => {
+const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onSuccess }) => {
+  const { registerCustomer,data, loading, error } = useRegisterCustomer();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,44 +21,68 @@ const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onClose, onSuccess 
     pincode: "",
     password: "",
     confirmPassword: "",
-    countryCode: "+91", // Default country code to +91 (India)
-    isVerified: false
+    isVerified: false,
   });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleCountryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData((prevData) => ({ ...prevData, countryCode: e.target.value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
 
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage("Passwords do not match");
-      setLoading(false);
       return;
     }
 
-    setErrorMessage(null); // Clear previous errors
+    setErrorMessage(null); 
 
-    // Store form data in sessionStorage
-    sessionStorage.setItem("customerData", JSON.stringify(formData));
+    // Prepare input data for the mutation
+    const customerInput = {
+      name: formData.name,
+      email: formData.email,
+      phone: `+91${formData.phone}`,
+      city: formData.city,
+      state: formData.state,
+      country: formData.country,
+      pincode: formData.pincode,
+      password: formData.password,
+      isVerified: false,
+    };
 
-    // Trigger the success handler with phone number
-    onSuccess(`${formData.countryCode} ${formData.phone}`);
+    try {
+      // Register customer using the mutation
+      await registerCustomer(customerInput);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      setErrorMessage("An error occurred during registration");
+    }
+
   };
 
+  // UseEffect to react to changes in data and error after mutation is complete
+  useEffect(() => {
+    if (!loading) {
+      if (data) {
+        if (data.addCustomer.success) {
+          onSuccess(`+91${formData.phone}`);
+        } else if (data.addCustomer.errors) {
+          setErrorMessage(data.addCustomer.errors.join(", "));
+        }
+      }
+      if (error) {
+        setErrorMessage(error.message);
+      }
+    }
+  }, [data, error, formData.phone, loading, onSuccess]); 
+
   return (
-    <div className=" rounded-lg">
-      <h1 className="text-xl font-bold mb-4 text-center  ">Register</h1>
+    <div className="rounded-lg">
+      <h1 className="text-xl font-bold mb-4 text-center">Register</h1>
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="grid grid-cols-2 gap-4">
           <input
@@ -80,13 +106,8 @@ const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onClose, onSuccess 
         </div>
 
         <div className="flex items-center space-x-2">
-          <select
-            value={formData.countryCode}
-            onChange={handleCountryCodeChange}
-            className="p-2 border rounded-md bg-white"
-          >
+          <select className="p-2 border rounded-md bg-white">
             <option value="+91">+91 (India)</option>
-            {/* Add more country codes as needed */}
           </select>
           <input
             type="tel"
@@ -177,6 +198,7 @@ const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onClose, onSuccess 
           ) : (
             "Register"
           )}
+          
         </button>
       </form>
     </div>

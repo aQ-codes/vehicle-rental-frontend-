@@ -4,7 +4,6 @@ import { useUpdateVehicleInventory } from "../services/VehicleInventoryService";
 import ClipLoader from "react-spinners/ClipLoader";
 import Modal from "@/components/ui/Modal/Modal";
 
-
 interface VehicleInventoryModalProps {
     vehicleEntry: VehicleEntry ; 
     onClose: () => void; // Function to close the modal
@@ -46,7 +45,6 @@ const VehicleInventoryModal: React.FC<VehicleInventoryModalProps> = ({ vehicleEn
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, __typename, ...cleanedFormData } = formData;
         try {
             await updateVehicleEntry(vehicleEntry.id, cleanedFormData); 
