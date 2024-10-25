@@ -8,7 +8,7 @@ const Hero = () => {
 
   return (
     <div className="hero">
-      <div className="flex-1 pt-20  bg-slate-500">
+      <div className="flex-1 pt-16 pb-16 ">
         <h1 className="hero__title">
           Find, book, rent a car—quick and super easy!
         </h1>
@@ -16,6 +16,10 @@ const Hero = () => {
         <p className="hero__subtitle">
           Streamline your car rental experience with our effortless booking
           process.
+        </p>
+
+        <p className="">
+
         </p>
       </div>
       <div className="hero__image-container">

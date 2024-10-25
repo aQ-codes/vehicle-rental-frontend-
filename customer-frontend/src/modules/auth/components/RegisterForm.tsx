@@ -70,6 +70,7 @@ const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onSuccess }) => {
       if (data) {
         if (data.addCustomer.success) {
           onSuccess(`+91${formData.phone}`);
+          sessionStorage.setItem('bookingInfo', JSON.stringify(bookingDetails));
         } else if (data.addCustomer.errors) {
           setErrorMessage(data.addCustomer.errors.join(", "));
         }
