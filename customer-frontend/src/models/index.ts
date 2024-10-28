@@ -10,3 +10,10 @@ export interface Customer {
   password: string;
   isVerified:boolean;
 }
+
+export interface Make {
+  make: string;
+}
+
+
+

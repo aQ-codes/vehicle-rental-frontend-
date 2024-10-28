@@ -1,12 +1,12 @@
-import React from "react";
-import PriceRangeSlider from "./PriceRangeSlider";
-import BodyTypeFilter from "./BodyTypeFilter";
-import TransmissionFilter from "./TransmissionFilter";
-import ColorFilter from "./ColorFilter";
-import AvailabilityToggle from "./AvailabilityToggle";
-import FuelTypeFilter from "./FuelTypeFilter";
-import BrandFilter from "./BrandFilter";
-import MileageFilter from "./MileageFilter";
+import AvailabilityToggle from "@/modules/filter-cars/components/availability-filter";
+import BodyTypeFilter from "@/modules/filter-cars/components/body-type-filter";
+import BrandFilter from "@/modules/filter-cars/components/brand-filter";
+import ColorFilter from "@/modules/filter-cars/components/color-filter";
+import FuelTypeFilter from "@/modules/filter-cars/components/fuel-type-filter";
+import MileageFilter from "@/modules/filter-cars/components/mileage-filter";
+import PriceRangeSlider from "@/modules/filter-cars/components/price-filter";
+import TransmissionFilter from "@/modules/filter-cars/components/transmission-filter";
+
 
 const FilterSidebar = ({ filters }) => {
   return (

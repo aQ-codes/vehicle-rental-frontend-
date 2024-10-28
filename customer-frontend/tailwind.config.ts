@@ -12,6 +12,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        customSilver: '#f0f0f0'
       },
       backgroundImage: {
         'pattern': "url('/pattern.png')",

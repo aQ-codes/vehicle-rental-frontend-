@@ -1,26 +1,31 @@
 import { gql } from '@apollo/client';
 
 export const ADD_VEHICLE_INVENTORIES_MUTATION = gql`
-  mutation AddVehicleInventories($input: [AddVehicleInventoryInput!]!) {
-    addVehicleInventories(input: $input) {
-      success
-      errorEntries {
-        modelId
-        vin
-        variant
-        year
-        color
-        transmission
-        fuelType
-        engineCapacity
-        mileage
-        pricePerDay
-        status
-        error
-      }
+    mutation AddVehicleInventories($input: [AddVehicleInventoryInput!]!) {
+        addVehicleInventories(input: $input) {
+            success
+            partialSuccess
+            successCount
+            failedCount
+            alreadyExistingCount
+            errorEntries {
+                modelId
+                vin
+                variant
+                year
+                color
+                transmission
+                fuelType
+                engineCapacity
+                mileage
+                pricePerDay
+                status
+                error
+            }
+        }
     }
-  }
 `;
+
 
 export const UPDATE_VEHICLE_INVENTORY_MUTATION = gql`
   mutation UpdateVehicleInventory($id: Int!, $input: AddVehicleInventoryInput!) {

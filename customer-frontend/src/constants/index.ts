@@ -37,3 +37,10 @@ export const locations = [
   { id: 6, name: 'Poovar' },
   { id: 7, name: 'Thampanoor' },
 ]
+
+export const vehicleMakes= [
+  { name: 'Tata', logo: '/assets/images/manufactures_logo/tata.png' },
+  { name: 'Maruti', logo: '/assets/images/manufactures_logo/maruti_suzuki.png' },
+  { name: 'Toyota', logo: '/assets/images/manufactures_logo/toyota.svg' },
+  { name: 'Mahindra', logo: '/assets/images/manufactures_logo/mahindra.png' },
+];

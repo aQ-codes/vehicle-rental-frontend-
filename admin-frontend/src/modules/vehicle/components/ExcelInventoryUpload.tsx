@@ -6,10 +6,6 @@ import { ADD_VEHICLE_INVENTORIES_MUTATION } from '@/graphql/mutations/vehicle-in
 import ClipLoader from 'react-spinners/ClipLoader'; // Import ClipLoader
 import { VehicleEntry } from '@/models';
 
-interface FailedEntry extends VehicleEntry {
-  error: string;
-}
-
 const ExcelVehicleInventoryUpload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -45,24 +41,32 @@ const ExcelVehicleInventoryUpload: React.FC = () => {
       const worksheet = workbook.Sheets[sheetName];
 
       const vehicleData: VehicleEntry[] = XLSX.utils.sheet_to_json(worksheet);
-      const failedEntries: FailedEntry[] = []; // Track failed entries
 
       try {
         // Upload vehicle data in a single mutation call
         const response = await addVehicleInventories({ variables: { input: vehicleData } });
-    
-        if (!response.data.addVehicleInventories.success) {
-            // If there are failed entries, track them
-            failedEntries.push(...response.data.addVehicleInventories.errorEntries);
-            const failedCount = failedEntries.length; 
-            // Set error messages indicating how many entries failed
-            setErrorMessages([`Failed to upload ${failedCount} vehicle(s).`]);
-        } else {
+        const result = response.data.addVehicleInventories;
+
+        if (result.success) {
+            // All entries uploaded successfully
             setSuccessMessage('All vehicles uploaded successfully!');
+        } else if (result.partialSuccess) {
+            // Partial success, show success and error messages
+            setSuccessMessage(`${result.successCount} vehicle(s) uploaded successfully.`);
+            setErrorMessages([
+                `${result.failedCount} vehicle(s) failed to upload.`,
+                `${result.alreadyExistingCount} vehicle(s) already existed.`
+            ]);
+        } else {
+            // Complete failure, show error message
+            setErrorMessages([
+                `${result.failedCount} vehicle(s) failed to upload.`,
+                `${result.alreadyExistingCount} vehicle(s) already existed.`
+            ]);
         }
+
     } catch (error) {
-        console.error('Error uploading vehicles:', error);
-        setErrorMessages(['Failed to add vehicles.']);
+        setErrorMessages([`Failed to add vehicles.${error}`]);
     } finally {
         setLoading(false); // Stop loading after the process
     }

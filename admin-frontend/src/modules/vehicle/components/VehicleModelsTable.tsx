@@ -77,7 +77,7 @@ const VehicleModelsTable = () => {
                                 </Link>
                                 <Link href={`/edit-vehicle/${vehicle.id}`}>
                                   <button className="flex items-center border border-blue-500 text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white px-2 py-1 rounded ml-2">
-                                  <PencilSquareIcon className="h-5 w-5" />
+                                  <PencilSquareIcon className="h-7 w-5" />
                                   </button>
                                 </Link>
                                 <button 

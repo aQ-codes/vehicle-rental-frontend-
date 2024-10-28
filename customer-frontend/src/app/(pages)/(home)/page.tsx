@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero'
-import LocationPicker from '@/modules/filter-cars/components/LocationPicker'
+import QuickSearch from '@/components/QuickSearch'
+import LocationPicker from '@/modules/vehicles/components/location-filter'
 import React from 'react'
 
 const page = () => {
@@ -7,6 +8,7 @@ const page = () => {
     <>
       <Hero/>
       <LocationPicker/>
+      <QuickSearch/>
     </>
 
   )
