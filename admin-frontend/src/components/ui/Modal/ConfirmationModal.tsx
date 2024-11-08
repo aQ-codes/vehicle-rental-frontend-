@@ -12,25 +12,24 @@ interface ConfirmationModalProps {
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onClose, onConfirm, children, variant = [] }) => {
   // Function to render the content of the modal
-
   const renderModalContent = () => (
     <>
-      <div>
+      <div className=" text-gray-800 text-center">
         {children}
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-4">
         <Button
           type="button"
           title="OK"
           label="OK"
-          variant={['btn confirm mr-3']}
+          variant={['btn confirm bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 transition mr-3']}
           onClick={onConfirm}
         />
         <Button
           type="button"
           title="Cancel"
           label="Cancel"
-          variant={['btn cancel']}
+          variant={['btn cancel bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 transition']}
           onClick={onClose}
         />
       </div>

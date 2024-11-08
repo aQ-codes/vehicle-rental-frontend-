@@ -7,15 +7,12 @@ import Image from 'next/image';
 
 export const Brands = () => {
   const { loading, error, uniqueMakes } = useGetUniqueMakes(); 
-console.log(uniqueMakes)
-
-
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error fetching makes: {error.message}</div>;
 
   return (
-    <div className="flex flex-wrap mt-5">
+    <div className="flex justify-center flex-wrap mt-5">
   {uniqueMakes.map((make) => {
     const manufacturer = vehicleMakes.find((m) => m.name === make);
     return (

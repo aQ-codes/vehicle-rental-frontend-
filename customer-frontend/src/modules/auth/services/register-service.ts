@@ -7,7 +7,6 @@ export const useRegisterCustomer = () => {
 
   const registerCustomer = async (input: Customer) => {
       await addCustomer({ variables: { input } });
-    
   };
 
   return { registerCustomer, data, loading, error };

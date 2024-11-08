@@ -25,85 +25,79 @@ const ExcelVehicleInventoryUpload: React.FC = () => {
 
   const handleUpload = async () => {
     if (!file) return;
-
     const reader = new FileReader();
     setLoading(true);
-    
+
     reader.onload = async (event) => {
       if (!event.target || !event.target.result) {
         setLoading(false);
         return;
       }
-
       const data = new Uint8Array(event.target.result as ArrayBuffer);
       const workbook = XLSX.read(data, { type: 'array' });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
-
       const vehicleData: VehicleEntry[] = XLSX.utils.sheet_to_json(worksheet);
 
       try {
-        // Upload vehicle data in a single mutation call
         const response = await addVehicleInventories({ variables: { input: vehicleData } });
         const result = response.data.addVehicleInventories;
-
         if (result.success) {
-            // All entries uploaded successfully
-            setSuccessMessage('All vehicles uploaded successfully!');
+          // All entries uploaded successfully
+          setSuccessMessage('All vehicles uploaded successfully!');
         } else if (result.partialSuccess) {
-            // Partial success, show success and error messages
-            setSuccessMessage(`${result.successCount} vehicle(s) uploaded successfully.`);
-            setErrorMessages([
-                `${result.failedCount} vehicle(s) failed to upload.`,
-                `${result.alreadyExistingCount} vehicle(s) already existed.`
-            ]);
+          // Partial success, show success and error messages
+          setSuccessMessage(`${result.successCount} vehicle(s) uploaded successfully.`);
+          setErrorMessages([
+            `${result.failedCount} vehicle(s) failed to upload.`,
+            `${result.alreadyExistingCount} vehicle(s) already existed.`
+          ]);
         } else {
-            // Complete failure, show error message
-            setErrorMessages([
-                `${result.failedCount} vehicle(s) failed to upload.`,
-                `${result.alreadyExistingCount} vehicle(s) already existed.`
-            ]);
+          // Complete failure, show error message
+          setErrorMessages([
+            `${result.failedCount} vehicle(s) failed to upload.`,
+            `${result.alreadyExistingCount} vehicle(s) already existed.`
+          ]);
         }
-
-    } catch (error) {
-        setErrorMessages([`Failed to add vehicles.${error}`]);
-    } finally {
+      } catch (error) {
+        setErrorMessages([`Failed to add vehicles. ${error}`]);
+      } finally {
         setLoading(false); // Stop loading after the process
-    }
-    
+      }
     };
 
     reader.readAsArrayBuffer(file);
   };
 
   return (
-    <div>
+    <div className="p-6 bg-white rounded-lg shadow-lg space-y-4">
       <div className='flex justify-between items-center mb-4'>
-        <label className="border border-gray-400 rounded px-2 py-1 cursor-pointer  flex items-center">
+        <label className="border border-gray-400 rounded px-3 py-2 cursor-pointer flex items-center bg-gray-50 hover:bg-gray-100 transition">
           <input
             type="file"
             accept=".xlsx, .xls"
             onChange={handleFileChange}
+            className="hidden"
           />
+          <span className="text-gray-700">Select File</span>
         </label>
-
+        {file && <span className="ml-4 text-gray-600">{file.name}</span>}
         <button
           onClick={handleUpload}
-          className="flex items-center border border-green-500 text-green-500 px-2 py-1 rounded ml-2 hover:bg-gray-100 transition"
+          className="flex items-center border border-green-500 text-green-500 px-3 py-2 rounded shadow hover:bg-green-500 hover:text-white transition"
           disabled={loading}
         >
           {loading ? (
             <ClipLoader size={20} color={"#36D7B7"} loading={loading} />
           ) : (
-          <CheckIcon className="h-5 w-5 mr-1" />
+            <CheckIcon className="h-5 w-5 mr-1" />
           )}
           Save Changes
         </button>
       </div>
-
-      {successMessage && <p className="text-green-500">{successMessage}</p>}
+      {successMessage && <p className="text-green-500 font-semibold">{successMessage}</p>}
       {errorMessages.length > 0 && (
-        <div className="text-red-500">
+        <div className="text-red-500 space-y-1">
           {errorMessages.map((error, index) => (
             <p key={index}>{error}</p>
           ))}

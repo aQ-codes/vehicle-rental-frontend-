@@ -1,14 +1,15 @@
-import OTPInput from "@/components/ui/OtpInput";
+// VerifyPhone.tsx
 import React, { useState } from "react";
-
+import OTPInput from "@/components/ui/OtpInput";
 
 interface VerifyPhoneProps {
   onClose: () => void;
   phone: string;
+  onSkip: () => void; // Add onSkip prop
 }
 
-const VerifyPhone: React.FC<VerifyPhoneProps> = ({ onClose, phone }) => {
-  const [otp, setOtp] = useState(Array(6).fill("")); // State to hold the OTP
+const VerifyPhone: React.FC<VerifyPhoneProps> = ({ onClose, phone, onSkip }) => {
+  const [otp, setOtp] = useState(Array(6).fill(""));
   const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -24,10 +25,10 @@ const VerifyPhone: React.FC<VerifyPhoneProps> = ({ onClose, phone }) => {
 
   const handleVerification = () => {
     setLoading(true);
-    const otpString = otp.join(""); // Combine OTP digits
+    const otpString = otp.join("");
     console.log("Verifying code:", otpString);
     setTimeout(() => {
-      if (otpString === "123456") { // Simulated OTP check
+      if (otpString === "123456") {
         console.log("OTP verified successfully!");
         onClose();
       } else {
@@ -40,31 +41,28 @@ const VerifyPhone: React.FC<VerifyPhoneProps> = ({ onClose, phone }) => {
   return (
     <div className="p-8 bg-white rounded-lg">
       <h2 className="text-xl font-bold mb-4 text-center">Verify Phone Number</h2>
-      <p className="text-sm text-center">Enter the OTP send to {phone}</p>
+      <p className="text-center text-gray-600 mb-4">Enter the OTP sent to {phone}</p>
 
-      {/* OTP Input Component */}
-      <OTPInput otp={otp} setOtp={setOtp} isDisabled={loading} />
+      <OTPInput value={otp} onChange={setOtp} />
 
       {errorMessage && <p className="text-red-500 text-xs mt-2">{errorMessage}</p>}
-    <div className="text-center">
-          <button
-            onClick={handleSendOtp}
-            className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
-            disabled={loading || otpSent}
-          >
-            {loading ? "Sending..." : otpSent ? "Resend OTP" : "Send OTP"}
-          </button>
 
-          <button
-            onClick={handleVerification}
-            className="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
-            disabled={loading || !otpSent}
-          >
-            {loading ? "Verifying..." : "Verify"}
-          </button>
-    </div>
+      <button
+        type="button"
+        onClick={handleVerification}
+        disabled={loading}
+        className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center mt-4"
+      >
+        {loading ? "Verifying..." : "Verify"}
+      </button>
 
-
+      <button
+        type="button"
+        onClick={onSkip}
+        className="mt-4 text-center text-gray-500 hover:underline text-sm"
+      >
+        Do this later
+      </button>
     </div>
   );
 };

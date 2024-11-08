@@ -1,29 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
-
 import { footerLinks } from "@/constants";
 
 const Footer = () => (
-  <footer className='flex flex-col text-black-100  border-t border-gray-100 footer'>
-    <div className='flex max-md:flex-col flex-wrap justify-between gap-5 sm:px-16 px-6 py-10'>
-      <div className='flex flex-col justify-start items-start '>
-        <Image src="/assets/images/logo_dw.png" alt='logo' width={118} height={118} className='object-contain' />
-        <p className='text-base text-gray-700'>
-          DreamWheels 2024 
-        </p>
+  <footer className="bg-gray-900 text-gray-300 p-10">
+    <div className="container mx-auto flex flex-wrap justify-between items-center space-y-6 md:space-y-0">
+      <div className="flex flex-col items-start">
+        <Image src="/assets/images/logo_dw.png" alt="logo" width={118} height={118} className="object-contain" />
+        <p className="mt-4 text-sm">DreamWheels 2024</p>
       </div>
-
-      <div className="footer__links">
+      <div className="flex flex-wrap gap-10">
         {footerLinks.map((item) => (
-          <div key={item.title} className="footer__link">
-            <h3 className="font-bold text-gray-700">{item.title}</h3>
-            <div className="flex flex-col gap-5">
+          <div key={item.title} className="flex flex-col space-y-2">
+            <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+            <div className="flex flex-col space-y-1">
               {item.links.map((link) => (
-                <Link
-                  key={link.title}
-                  href={link.url}
-                  className="text-gray-500"
-                >
+                <Link key={link.title} href={link.url} className="text-sm text-gray-400 hover:text-white">
                   {link.title}
                 </Link>
               ))}
@@ -32,17 +24,17 @@ const Footer = () => (
         ))}
       </div>
     </div>
-
-    <div className='flex justify-between items-center flex-wrap mt-10 border-t text-gray-700 border-gray-400 sm:px-16 px-6 py-10'>
-      <p>@2024 DreamWheels. All rights reserved &copy;</p>
-
-      <div className="footer__copyrights-link">
-        <Link href="/" className="text-gray-500">
-          Privacy & Policy
-        </Link>
-        <Link href="/" className="text-gray-500">
-          Terms & Condition
-        </Link>
+    <div className="mt-10 border-t border-gray-700 pt-6">
+      <div className="container mx-auto flex flex-wrap justify-between items-center">
+        <p className="text-sm">&copy; 2024 DreamWheels. All rights reserved.</p>
+        <div className="flex space-x-4">
+          <Link href="/" className="text-sm text-gray-400 hover:text-white">
+            Privacy & Policy
+          </Link>
+          <Link href="/" className="text-sm text-gray-400 hover:text-white">
+            Terms & Condition
+          </Link>
+        </div>
       </div>
     </div>
   </footer>

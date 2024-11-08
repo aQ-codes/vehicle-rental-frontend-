@@ -129,157 +129,147 @@ export default function CarForm() {
     if (successMessage) {
         return <div className="text-green-600 text-lg flex justify-center items-center">{successMessage}</div>;
     }
-
     return (
-        <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-4">
-                {CAR_FORM_INPUTS.map((input) => {
-                    if (input.fieldType === "text" || input.fieldType === "number") {
-                        return (
-                            <div key={input.name} className="flex flex-col text-sm">
-                                <label className="mb-1" htmlFor={input.name}>
-                                    {input.label}
-                                </label>
-                                <input
-                                    id={input.name}
-                                    type={input.fieldType}
-                                    required={input.required}
-                                    name={input.name}
-                                    placeholder={`Enter ${input.label}`}
-                                    className="border rounded-md p-2"
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                        );
-                    }
-                    if (input.fieldType === "dropdown" && input.options) {
-                        return (
-                            <div key={input.name} className="flex flex-col text-sm">
-                                <label className="mb-1" htmlFor={input.name}>
-                                    {input.label}
-                                </label>
-                                <select
-                                    id={input.name}
-                                    name={input.name}
-                                    required={input.required}
-                                    className="border rounded-md p-2 bg-white"
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="" disabled>
-                                        Select {input.label}
-                                    </option>
-                                    {input.options.map((option) => (
-                                        <option key={option} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        );
-                    }
-                    return null;
-                })}
-            </div>
-
-            {/* Description Section */}
-            <div className={`flex flex-col text-sm w-full`}>
-                <label className="mb-1" htmlFor="description">
-                    Description
-                </label>
-                <textarea
-                    id="description"
-                    name="description"
-                    required
-                    placeholder="Enter car description"
-                    rows={5}
-                    className="border rounded-md p-2 w-full"
+      <form className="space-y-8 bg-white rounded-lg shadow-lg" onSubmit={handleSubmit}>
+        <div className="grid grid-cols-2 gap-6">
+          {CAR_FORM_INPUTS.map((input) => {
+            if (input.fieldType === "text" || input.fieldType === "number") {
+              return (
+                <div key={input.name} className="flex flex-col text-sm">
+                  <label className="mb-2 font-medium text-gray-700" htmlFor={input.name}>
+                    {input.label}
+                  </label>
+                  <input
+                    id={input.name}
+                    type={input.fieldType}
+                    required={input.required}
+                    name={input.name}
+                    placeholder={`Enter ${input.label}`}
+                    className="border rounded-lg p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onChange={handleInputChange}
-                />
-            </div>
-
-            {/* Primary Image Upload */}
-            <div className="space-y-2 text-sm">
-                <label className="mb-1" htmlFor="primaryImage">
-                    Upload Primary Image
-                </label>
-                <input
-                    id="primaryImage"
-                    type="file"
-                    onChange={handlePrimaryImageChange}
-                    className="border rounded-md p-2 w-full"
-                    accept="image/*" // Restrict file picker to images
-                />
-                {/* Display an error if primary image is invalid */}
-                {primaryImageError && (
-                    <p className="text-red-500 text-xs">{primaryImageError}</p>
-                )}
-            </div>
-
-            {primaryImage && (
-                <div className="mt-4">
-                    <h4>Primary Image Preview:</h4>
-                    <Image
-                        src={URL.createObjectURL(primaryImage)}
-                        alt="Primary"
-                        className="w-16 h-16 object-cover border border-gray-300 rounded"
-                        width={100}
-                        height={100}
-                    />
+                  />
                 </div>
-            )}
-
-            {/* Additional Images Upload */}
-            <div className="space-y-2 text-sm">
-                <label className="mb-1" htmlFor="images">
-                    Upload Additional Images (Up to 5)
-                </label>
-                <input
-                    id="images"
-                    type="file"
-                    multiple
-                    onChange={handleAdditionalImagesChange}
-                    className="border rounded-md p-2 w-full"
-                    accept="image/*" // Restrict file picker to images
-                />
-                {/* Display an error if additional images are invalid */}
-                {additionalImagesError && (
-                    <p className="text-red-500 text-xs">{additionalImagesError}</p>
-                )}
-            </div>
-
-            {additionalImages.length > 0 && (
-                <div className="mt-4">
-                    <h4>Additional Images Preview:</h4>
-                    <div className="flex space-x-2">
-                        {additionalImages.map((img, index) => (
-                            <Image
-                                key={index}
-                                src={URL.createObjectURL(img)}
-                                alt={`Additional ${index + 1}`}
-                                className="w-16 h-16 object-cover border border-gray-300 rounded"
-                                width={100}
-                                height={100}
-                            />
-                        ))}
-                    </div>
+              );
+            }
+            if (input.fieldType === "dropdown" && input.options) {
+              return (
+                <div key={input.name} className="flex flex-col text-sm">
+                  <label className="mb-2 font-medium text-gray-700" htmlFor={input.name}>
+                    {input.label}
+                  </label>
+                  <select
+                    id={input.name}
+                    name={input.name}
+                    required={input.required}
+                    className="border rounded-lg p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={handleInputChange}
+                  >
+                    <option value="" disabled>
+                      Select {input.label}
+                    </option>
+                    {input.options.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-            )}
-
-            {/* Submit Button */}
-            <button
-                type="submit"
-                className={`bg-blue-600 text-white px-4 py-2 rounded-md ${
-                    loading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                disabled={loading}
-            >
-                {loading ? "Adding..." : "Add Vehicle Model"}
-            </button>
-
-            {/* Display error message if mutation fails */}
-            {error && (
-                <p className="text-red-500 text-sm">{error.message}</p>
-            )}
-        </form>
+              );
+            }
+            return null;
+          })}
+        </div>
+        {/* Description Section */}
+        <div className="flex flex-col text-sm w-full">
+          <label className="mb-2 font-medium text-gray-700" htmlFor="description">
+            Description
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            required
+            placeholder="Enter car description"
+            rows={5}
+            className="border rounded-lg p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            onChange={handleInputChange}
+          />
+        </div>
+        {/* Primary Image Upload */}
+        <div className="space-y-2 text-sm">
+          <label className="mb-2 font-medium text-gray-700" htmlFor="primaryImage">
+            Upload Primary Image
+          </label>
+          <input
+            id="primaryImage"
+            type="file"
+            onChange={handlePrimaryImageChange}
+            className="border rounded-lg p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            accept="image/*"
+          />
+          {/* Display an error if primary image is invalid */}
+          {primaryImageError && (
+            <p className="text-red-500 text-xs">{primaryImageError}</p>
+          )}
+        </div>
+        {primaryImage && (
+          <div className="mt-4">
+            <h4 className="font-medium text-gray-700">Primary Image Preview:</h4>
+            <Image
+              src={URL.createObjectURL(primaryImage)}
+              alt="Primary"
+              className="w-24 h-24 object-cover border border-gray-300 rounded-lg mt-2"
+              width={100}
+              height={100}
+            />
+          </div>
+        )}
+        {/* Additional Images Upload */}
+        <div className="space-y-2 text-sm">
+          <label className="mb-2 font-medium text-gray-700" htmlFor="images">
+            Upload Additional Images (Up to 5)
+          </label>
+          <input
+            id="images"
+            type="file"
+            multiple
+            onChange={handleAdditionalImagesChange}
+            className="border rounded-lg p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            accept="image/*"
+          />
+          {/* Display an error if additional images are invalid */}
+          {additionalImagesError && (
+            <p className="text-red-500 text-xs">{additionalImagesError}</p>
+          )}
+        </div>
+        {additionalImages.length > 0 && (
+          <div className="mt-4">
+            <h4 className="font-medium text-gray-700">Additional Images Preview:</h4>
+            <div className="flex space-x-2 mt-2">
+              {additionalImages.map((img, index) => (
+                <Image
+                  key={index}
+                  src={URL.createObjectURL(img)}
+                  alt={`Additional ${index + 1}`}
+                  className="w-16 h-16 object-cover border border-gray-300 rounded-lg"
+                  width={100}
+                  height={100}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className={`bg-blue-600 text-white px-6 py-3 rounded-lg font-medium shadow-md hover:bg-blue-700 transition ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={loading}
+        >
+          {loading ? "Adding..." : "Add Vehicle Model"}
+        </button>
+        {/* Display error message if mutation fails */}
+        {error && (
+          <p className="text-red-500 text-sm mt-4">{error.message}</p>
+        )}
+      </form>
     );
 }

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { useRegisterCustomer } from "../services/register-service";
+import { Customer } from "@/models";
 
 interface CustomerRegisterFormProps {
   onClose: () => void;
@@ -10,7 +11,7 @@ interface CustomerRegisterFormProps {
 }
 
 const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onSuccess }) => {
-  const { registerCustomer,data, loading, error } = useRegisterCustomer();
+  const { registerCustomer, data, loading, error } = useRegisterCustomer();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,6 +26,7 @@ const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onSuccess }) => {
   });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [customerInput, setCustomerInput] = useState<Customer>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -39,10 +41,10 @@ const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onSuccess }) => {
       return;
     }
 
-    setErrorMessage(null); 
+    setErrorMessage(null);
 
     // Prepare input data for the mutation
-    const customerInput = {
+    const input = {
       name: formData.name,
       email: formData.email,
       phone: `+91${formData.phone}`,
@@ -54,23 +56,21 @@ const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onSuccess }) => {
       isVerified: false,
     };
 
-    try {
-      // Register customer using the mutation
-      await registerCustomer(customerInput);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      setErrorMessage("An error occurred during registration");
-    }
+    setCustomerInput(input); // Set customerInput in state
 
+    try {
+      await registerCustomer(input);
+    } catch (err) {
+      setErrorMessage(`An error occurred during registration:${err}`);
+    }
   };
 
-  // UseEffect to react to changes in data and error after mutation is complete
   useEffect(() => {
-    if (!loading) {
+    if (!loading && customerInput) {
       if (data) {
         if (data.addCustomer.success) {
           onSuccess(`+91${formData.phone}`);
-          sessionStorage.setItem('bookingInfo', JSON.stringify(bookingDetails));
+          sessionStorage.setItem("customerInput", JSON.stringify(customerInput));
         } else if (data.addCustomer.errors) {
           setErrorMessage(data.addCustomer.errors.join(", "));
         }
@@ -79,128 +79,153 @@ const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onSuccess }) => {
         setErrorMessage(error.message);
       }
     }
-  }, [data, error, formData.phone, loading, onSuccess]); 
-
+  }, [data, error, formData.phone, loading, onSuccess, customerInput]);
+  
   return (
-    <div className="rounded-lg">
-      <h1 className="text-xl font-bold mb-4 text-center">Register</h1>
-      <form onSubmit={handleSubmit} className="space-y-3">
+    <div>
+      <h1 className="text-2xl font-bold mb-6 text-center text-gray-700">Register</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-2 gap-6">
+          <div className="flex flex-col">
+            <label className="text-gray-500 text-sm mb-1" htmlFor="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-2xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-gray-500 text-sm mb-1" htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-2xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+        <div className="flex items-center ">
+          <div className="flex flex-col">
+            <label className="text-gray-500 text-sm mb-1" htmlFor="phone">Phone</label>
+            <div className="flex items-center space-x-4">
+              <select className="p-2 border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="+91">+91 (India)</option>
+              </select>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone number"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-2xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-6">
+          <div className="flex flex-col">
+            <label className="text-gray-500 text-sm mb-1" htmlFor="city">City</label>
+            <input
+              type="text"
+              name="city"
+              placeholder="City"
+              value={formData.city}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-2xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-gray-500 text-sm mb-1" htmlFor="state">State</label>
+            <input
+              type="text"
+              name="state"
+              placeholder="State"
+              value={formData.state}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-2xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-6">
+          <div className="flex flex-col">
+            <label className="text-gray-500 text-sm mb-1" htmlFor="country">Country</label>
+            <input
+              type="text"
+              name="country"
+              placeholder="Country"
+              value={formData.country}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-2xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-gray-500 text-sm mb-1" htmlFor="pincode">Pincode</label>
+            <input
+              type="text"
+              name="pincode"
+              placeholder="Pincode"
+              value={formData.pincode}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-2xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
         <div className="grid grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-md"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-md"
-          />
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <select className="p-2 border rounded-md bg-white">
-            <option value="+91">+91 (India)</option>
-          </select>
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone number"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-md"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            value={formData.city}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-md"
-          />
-          <input
-            type="text"
-            name="state"
-            placeholder="State"
-            value={formData.state}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-md"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="country"
-            placeholder="Country"
-            value={formData.country}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-md"
-          />
-          <input
-            type="text"
-            name="pincode"
-            placeholder="Pincode"
-            value={formData.pincode}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-md"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-md"
-          />
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-md"
-          />
-        </div>
-
-        {errorMessage && <p className="text-red-500 text-xs">{errorMessage}</p>}
-
+  <div className="flex flex-col">
+    <label className="text-gray-500 text-sm mb-1" htmlFor="password">Password</label>
+    <input
+      type="password"
+      name="password"
+      placeholder="Enter Password"
+      value={formData.password}
+      onChange={handleChange}
+      required
+      className="w-full p-2 border border-gray-300 rounded-2xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+  <div className="flex flex-col">
+    <label className="text-gray-500 text-sm mb-1" htmlFor="confirmPassword">Confirm Password</label>
+    <input
+      type="password"
+      name="confirmPassword"
+      placeholder="Confirm Password"
+      value={formData.confirmPassword}
+      onChange={handleChange}
+      required
+      className="w-full p-2 border border-gray-300 rounded-2xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+  </div>
+        {errorMessage && <p className="text-red-500 text-xs mt-2">{errorMessage}</p>}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
+          className="w-full bg-blue-600 text-white py-3 rounded-2xl hover:bg-blue-700 transition duration-300 flex items-center justify-center "
           disabled={loading}
         >
           {loading ? (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center">
               <ClipLoader color="#fff" loading={loading} size={20} />
               <span className="ml-2">Registering...</span>
             </div>
           ) : (
             "Register"
           )}
-          
         </button>
+
       </form>
     </div>
   );

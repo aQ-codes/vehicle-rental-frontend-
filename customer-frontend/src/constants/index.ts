@@ -43,4 +43,5 @@ export const vehicleMakes= [
   { name: 'Maruti', logo: '/assets/images/manufactures_logo/maruti_suzuki.png' },
   { name: 'Toyota', logo: '/assets/images/manufactures_logo/toyota.svg' },
   { name: 'Mahindra', logo: '/assets/images/manufactures_logo/mahindra.png' },
+  { name: 'Honda', logo: '/assets/images/manufactures_logo/honda.png' },
 ];
