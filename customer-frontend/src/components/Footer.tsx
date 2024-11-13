@@ -32,7 +32,7 @@ const Footer = () => (
             Privacy & Policy
           </Link>
           <Link href="/" className="text-sm text-gray-400 hover:text-white">
-            Terms & Condition
+            Terms & Condition 
           </Link>
         </div>
       </div>

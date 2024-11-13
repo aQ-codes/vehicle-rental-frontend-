@@ -34,3 +34,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# Ignore Docker-related files
+**/docker-compose.override.yml
+**/.dockerignore
+**/Dockerfile
+
+# Ignore Docker volumes or logs
+/var/lib/docker/
+/docker-compose.yml

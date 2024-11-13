@@ -5,7 +5,7 @@ import OTPInput from "@/components/ui/OtpInput";
 interface VerifyPhoneProps {
   onClose: () => void;
   phone: string;
-  onSkip: () => void; // Add onSkip prop
+  onSkip: () => void;
 }
 
 const VerifyPhone: React.FC<VerifyPhoneProps> = ({ onClose, phone, onSkip }) => {
@@ -43,7 +43,8 @@ const VerifyPhone: React.FC<VerifyPhoneProps> = ({ onClose, phone, onSkip }) => 
       <h2 className="text-xl font-bold mb-4 text-center">Verify Phone Number</h2>
       <p className="text-center text-gray-600 mb-4">Enter the OTP sent to {phone}</p>
 
-      <OTPInput value={otp} onChange={setOtp} />
+      {/* Update here */}
+      <OTPInput otp={otp} setOtp={setOtp} isDisabled={loading} />
 
       {errorMessage && <p className="text-red-500 text-xs mt-2">{errorMessage}</p>}
 
