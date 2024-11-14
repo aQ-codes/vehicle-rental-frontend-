@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import {GET_MIN_MAX_MILEAGE_QUERY, GET_MIN_MAX_PRICES_QUERY, GET_UNIQUE_COLORS_QUERY, GET_UNIQUE_FUEL_TYPES_QUERY, GET_UNIQUE_MAKES_QUERY, GET_UNIQUE_TRANSMISSION_QUERY, GET_UNIQUE_TYPES_QUERY, GET_VARIANTS, GET_VEHICLE_MODELS} from "@/graphql/queries/vehicle"
 import { SelectedFilters, VehicleModel } from "@/models/index";
 
-// Service to fetch unique data from the 
+// Service to fetch unique data from the vehicles
 
 export const useGetUniqueMakes = () => {
   const { loading, error, data } = useQuery<{ getUniqueMakes: string[] }>(GET_UNIQUE_MAKES_QUERY);

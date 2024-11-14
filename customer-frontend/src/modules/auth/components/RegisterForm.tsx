@@ -11,6 +11,7 @@ interface CustomerRegisterFormProps {
 }
 
 const RegisterForm: React.FC<CustomerRegisterFormProps> = ({ onSuccess }) => {
+  
   const { registerCustomer, data, loading, error } = useRegisterCustomer();
   const [formData, setFormData] = useState({
     name: "",
