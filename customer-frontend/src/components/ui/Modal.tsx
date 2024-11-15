@@ -15,9 +15,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, variant = [] }
   const modalClassName = `${variant && Array.isArray(variant) ? variant.map(cls => cls).join(' ') : ''}`;
 
   return (
-    <div className="fixed inset-0 w-screen min-h-screen bg-black bg-opacity-70 flex items-center justify-center z-[1000]">
-      <div className={`ModalBox ${modalClassName} z-[1001] overflow-y-auto  rounded-xl bg-white`}>
-        <div className="flex justify-end">
+    <div className="fixed inset-0 w-screen min-h-screen bg-black bg-opacity-70 flex items-center justify-center z-[1000] transition-opacity duration-300 ease-in-out">
+      <div className={`ModalBox ${modalClassName} z-[1001] overflow-y-auto rounded-xl bg-white transform transition-transform duration-300 ease-in-out ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
+        
+        <div className="flex justify-end ">
           <Button
             type="button"
             title="Close"
@@ -31,10 +32,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, variant = [] }
         </div>
       </div>
     </div>
-  
   );
 };
 
 export default Modal;
-
-

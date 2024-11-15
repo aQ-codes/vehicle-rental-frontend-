@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -11,21 +11,25 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [customerId, setCustomerId] = useState<number | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+
+  console.log("customer id from session storage is ",customerId)
+  // Load customer ID from session storage when the component mounts
+  useEffect(() => {
+    const storedCustomer = sessionStorage.getItem("customer");
+    if (storedCustomer) {
+      const { customerId } = JSON.parse(storedCustomer);
+      setCustomerId(customerId);
+    }
+  }, []);
 
   const login = (customerId: number) => {
     setCustomerId(customerId);
-    setToken(token);
-
-    // Store customer data as a JSON object in session storage
-    const customer = { customerId, token };
-    sessionStorage.setItem("customer", JSON.stringify(customer));
+    sessionStorage.setItem("customer", JSON.stringify({ customerId }));
   };
 
   const logout = () => {
     setCustomerId(null);
-    setToken(null);
-    sessionStorage.removeItem("customerData");
+    sessionStorage.removeItem("customer");
   };
 
   return (

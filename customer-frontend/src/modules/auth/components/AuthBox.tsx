@@ -25,7 +25,8 @@ const AuthBox: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <AuthLayout onClose={onClose}>
       <div>
         {showVerifyPhone ? (
-          <VerifyPhone phone={phoneNumber} onClose={onClose} onSkip={handleSkipVerification} />
+          <></>
+          // <VerifyPhone phone={phoneNumber} onSkip={handleSkipVerification} />
         ) : isLogin ? (
           <>
             <LoginForm onClose={onClose} />

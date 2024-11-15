@@ -55,7 +55,7 @@ const config: Config = {
       },
       backgroundImage: {
         // Fixed syntax by using double quotes for the URL
-        'hero-bg': "url('/assets/images/hero-bg.png')",
+        'hero-bg': "url('/assets/images/hero-bg.webp')",
       },
       borderRadius: {
         lg: 'var(--radius)',

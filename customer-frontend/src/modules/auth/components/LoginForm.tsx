@@ -16,6 +16,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { performLogin, data, loading, error } = useLoginCustomer();
+  
   const { login } = useAuth();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
@@ -28,7 +29,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
       await performLogin( email, password );
 
       if (!loading && !error) {
-
+        console.log(data)
         if (data.loginCustomer.success) {
           login(data.loginCustomer.id);// Update AuthContext with customer ID
           onClose();
@@ -36,7 +37,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
           console.log(data)
           setErrorMessage(data.loginCustomer.errors?.join(", ") || "Login failed");
         }
-
       }
 
     } catch (err) {

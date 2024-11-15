@@ -3,12 +3,11 @@ import OTPInput from "@/components/ui/OtpInput";
 import { useOtpService } from "../services/otp-service";
 
 interface VerifyPhoneProps {
-  onClose: () => void;
   phone: string;
   onSkip: () => void;
 }
 
-const VerifyPhone: React.FC<VerifyPhoneProps> = ({ onClose, phone, onSkip }) => {
+const VerifyPhone: React.FC<VerifyPhoneProps> = ({ phone, onSkip }) => {
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [otpSent, setOtpSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -36,7 +35,7 @@ const VerifyPhone: React.FC<VerifyPhoneProps> = ({ onClose, phone, onSkip }) => 
       setOtpSent(true);
       setErrorMessage(null);
     } catch (error) {
-      setErrorMessage("Failed to send OTP. Please try again.");
+      setErrorMessage(`Failed to send OTP. Please try again.${error}`);
     } finally {
       setResendLoading(false); // Stop loading after Resend OTP is complete
     }
@@ -52,14 +51,15 @@ const VerifyPhone: React.FC<VerifyPhoneProps> = ({ onClose, phone, onSkip }) => 
         setErrorMessage("Invalid OTP. Please try again.");
       }
     } catch (error) {
-      setErrorMessage("Failed to verify OTP. Please try again.");
+      setErrorMessage(`Failed to verify OTP. Please try again.${error}`);
     }
   };
 
   return (
     <div className="p-8 bg-white rounded-lg">
       <h2 className="text-xl font-bold mb-4 text-center">Verify Phone Number</h2>
-      <p className="text-center text-gray-600 mb-4">Enter the OTP sent to {phone}</p>
+      
+      {otpSent ? <p className="text-center text-gray-600 mb-4">Enter OTP send to {phone}</p>  : <p className="text-center text-gray-600 mb-4">Sending OTP to {phone}</p>}
 
       <OTPInput otp={otp} setOtp={setOtp} isDisabled={sendOtpLoading || validateOtpLoading} />
 

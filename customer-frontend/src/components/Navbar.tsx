@@ -1,21 +1,21 @@
 "use client";
 
-// import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-// import { useRouter } from 'next/navigation'; 
+import { useAuth } from '@/context/auth-context';
 import AuthButton from '@/modules/auth/components/AuthButton';
+import ProfileMenu from '@/modules/auth/components/ProfileMenu';
 
 const Navbar = () => {
+  const { isAuthenticated } = useAuth();
 
-    return (
-      <>
-      <div className="w-full flex flex-wrap justify-between relative z-20">
+  return (
+    <>
+      <div className="w-full flex flex-wrap justify-between relative z-20 ">
         {/* Branding */}
         <div>
-          {/* Company logo */}
-          <Link href="/" className="flex items-center mt-4 p-1">
-              <Image
+          <Link href="/" className="flex items-center mt-4">
+            <Image
               src="/assets/images/logo_dw2.png"
               alt="company_logo"
               width={184}
@@ -23,22 +23,22 @@ const Navbar = () => {
             />
           </Link>
         </div>
-    
+
         {/* Navigation menu */}
         <nav>
-          <ul className="flex space-x-4">
+          <ul className="flex space-x-4 items-center">
             <li>
-              <AuthButton/>
+              {isAuthenticated ? (
+                <ProfileMenu /> 
+              ) : (
+                <AuthButton />
+              )}
             </li>
           </ul>
         </nav>
       </div>
-    
-      {/* Render the UserLoginBox component when the auth button is clicked */}
-      {/* {isAuthModalOpen && <UserLoginBox onClose={handleCloseModal} />}  */}
     </>
-    
-    );
+  );
 };
 
 export default Navbar;

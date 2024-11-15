@@ -26,7 +26,6 @@
   display:flex;
   flex-direction: column;
   position: relative;
- 
 }
 
 /* START: Button styles */
@@ -35,7 +34,7 @@
   @apply rounded-full text-sm font-semibold border-none outline-none 
   flex gap-2 items-center justify-center cursor-pointer 
   transition-transform duration-300 ease-in-out 
-  bg-blue-400 w-[120px] text-white p-2 mt-3 shadow-md;
+  bg-blue-400 w-[120px] text-white p-2  shadow-md;
 }
 
 .btn:hover {
@@ -58,7 +57,7 @@
 }
 
 .btn.signin {
-  @apply  text-white py-2 px-4 transition-colors duration-300;
+  @apply  text-white py-2 px-4 transition-colors duration-300 mt-4;
 }
 
 .btn.signin:hover {
@@ -96,6 +95,12 @@
 
 /* END: Hero styles */
 
+/* Reserve space for images by setting their dimensions explicitly, so the layout doesn't shift once the image is loaded. */
+
+.reserved-space {
+  width: 100%; /* or specific width */
+  height: 400px; /* or specific height */
+}
 
 
 
